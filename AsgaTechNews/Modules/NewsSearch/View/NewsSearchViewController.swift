@@ -17,7 +17,7 @@ class NewsSearchViewController: UITableViewController, NewsSearchViewProtocol {
         self.setupSearchController()
         self.setupUiBehaviors()
         self.setupNavigationBarBehaviors()
-        self.registerTableViewCells()
+        self.setupTableViewBehaviors()
         // Do any additional setup after loading the view.
     }
 

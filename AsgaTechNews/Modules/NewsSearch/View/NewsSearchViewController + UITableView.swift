@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 extension NewsSearchViewController {
-    func registerTableViewCells() {
+    func setupTableViewBehaviors() {
         self.tableView.separatorStyle = .none
+        self.tableView.showsVerticalScrollIndicator  = false
         self.tableView.register(ArticleCell.self, forCellReuseIdentifier: NSStringFromClass(ArticleCell.self))
     }
 
