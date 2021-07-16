@@ -6,6 +6,7 @@
 //  Copyright © 2021 AsgaTech. All rights reserved.
 //
 
+import Kingfisher
 import UIKit
 
 @UIApplicationMain
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window.rootViewController = BaseNavigationController(rootViewController: NewsSearchRouter.createAnModule())
         window.makeKeyAndVisible()
         self.window = window
+        KingfisherManager.shared.cache.memoryStorage.config.totalCostLimit = 100
         return true
     }
 }
