@@ -44,6 +44,12 @@ class DetailsWithHeaderView: UIView {
         }
     }
 
+    var title: String? {
+        didSet {
+            self.titleLabel.text = title
+        }
+    }
+
     init(title: String?) {
         super.init(frame: .zero)
         self.titleLabel.text = title

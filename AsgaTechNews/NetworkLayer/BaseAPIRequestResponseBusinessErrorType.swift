@@ -8,13 +8,14 @@
 
 import Foundation
 
+// Handling Buseiness Errors.
 enum BaseAPIRequestResponseBusinessErrorType: Error {
     case providerError
 
     var message: String {
         switch self {
         case .providerError:
-            return "There's an error from the provider , please try again later."
+            return ""
         }
     }
 }

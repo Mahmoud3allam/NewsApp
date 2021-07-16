@@ -56,6 +56,64 @@ class APIRequestExecuter<T: APIRequestBuilder> {
         }
     }
 
+    func performMultiPartRequest<M: Decodable>(target: T, responseClass _: M.Type, completion: @escaping (Swift.Result<M?, BaseAPIRequestResponseFailureErrorType>) -> Void, uploadProgress: @escaping (Double) -> Void) {
+        let url = target.baseUrl + target.path
+        let method = Alamofire.HTTPMethod(rawValue: target.method.rawValue)
+        let parameters = buildParameters(withTask: target.task)
+        let actualParams = parameters.0
+        let data = parameters.2
+        AF.upload(multipartFormData: { multipartFormData in
+            if let unwrappedParams = actualParams {
+                for (key, value) in unwrappedParams {
+                    if let valueData = "\(value)".data(using: String.Encoding.utf8) {
+                        multipartFormData.append(valueData, withName: key as String)
+                    }
+                }
+            }
+
+            if let data = data {
+                data.forEach { singleData in
+                    multipartFormData.append(singleData.dataValue, withName: singleData.dataKey, fileName: singleData.dataKey + singleData.dataExtension.rawValue, mimeType: singleData.dataType.rawValue)
+                }
+            }
+        }, to: url, method: method, headers: nil, interceptor: APIRequestInterceptor()).validate()
+            .uploadProgress { progress in
+                uploadProgress(progress.fractionCompleted)
+            }
+            .responseJSON { response in
+                guard (response.response?.statusCode) != nil else {
+                    // We Should add Custom Error here...
+                    completion(.failure(.server))
+                    return
+                }
+                switch response.result {
+                case .success:
+                    guard let jsonData = response.data else {
+                        // We Should add Custom Error that we can't get Json Data
+                        completion(.failure(.parse))
+                        return
+                    }
+                    print(jsonData)
+                    do {
+                        let responseObject = try JSONDecoder().decode(M.self, from: jsonData)
+                        print("🕺 🕺 🕺 🕺 🕺🕺 💪")
+                        completion(.success(responseObject))
+                    } catch {
+                        print("😑 😑 😑 😑 😑 😑 😑 😑 😑 😑 😑 😑 😑 😑")
+                        completion(.failure(.parse))
+                        return
+                    }
+                case let .failure(error):
+                    print("🚫 🚫 🚫 🚫 🚫 🚫 🚫 🚫 🚫 🚫 🚫 🚫")
+                    guard let error = error.underlyingError as NSError? else {
+                        completion(.failure(BaseAPIRequestResponseFailureErrorType.unknown))
+                        return
+                    }
+                    completion(.failure(error.code.getAPIRequestResponseFailureErorr()))
+                }
+            }
+    }
+
     // MARK: - Build Parameters for  Requests
 
     private func buildParameters(withTask task: Task) -> ([String: Any]?, ParameterEncoding, [MultiPartData]?) {

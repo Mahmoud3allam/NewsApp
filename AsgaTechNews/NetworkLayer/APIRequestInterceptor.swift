@@ -9,4 +9,23 @@
 import Alamofire
 import Foundation
 
-final class APIRequestInterceptor: RequestInterceptor {}
+final class APIRequestInterceptor: RequestInterceptor {
+    private let retryLimit = 1
+    private let retryDelay: TimeInterval = 3
+
+    func adapt(_: URLRequest, for _: Session, completion _: @escaping (Result<URLRequest, Error>) -> Void) {
+        // Incase we want to add Token in headers..
+    }
+
+    func retry(_ request: Request, for _: Session, dueTo _: Error, completion: @escaping (RetryResult) -> Void) {
+        // Retry Logic.. , and refreshing token if there..
+        guard (request.task?.response as? HTTPURLResponse) != nil else {
+            return completion(.doNotRetry)
+        }
+        if request.retryCount < retryLimit {
+            completion(.retryWithDelay(retryDelay))
+        } else {
+            return completion(.doNotRetry)
+        }
+    }
+}

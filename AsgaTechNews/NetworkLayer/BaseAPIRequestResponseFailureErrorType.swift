@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Handling server Errors.
 public enum BaseAPIRequestResponseFailureErrorType: Error {
     case informational
     case redirection
@@ -21,19 +22,19 @@ public enum BaseAPIRequestResponseFailureErrorType: Error {
     var message: String {
         switch self {
         case .informational:
-            return ""
+            return "informational Error , Try Again in a few seconds"
         case .redirection:
-            return ""
+            return "redirection Error , Try Again in a few seconds"
         case .client:
-            return ""
+            return "client Error , Try Again in a few seconds"
         case .server:
-            return ""
+            return "server Error , Try Again in a few seconds"
         case .unknown:
-            return ""
+            return "Something went wrong please try again later."
         case .internet:
-            return ""
+            return "internet Error , Try Again in a few seconds"
         case .parse:
-            return ""
+            return "parse Error , Try Again in a few seconds"
         }
     }
 }

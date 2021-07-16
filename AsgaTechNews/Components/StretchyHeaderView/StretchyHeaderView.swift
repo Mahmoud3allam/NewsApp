@@ -83,7 +83,6 @@ class StretchyTableHeaderView: UIView {
             self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             self.contentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: 0)
-//            self.contentView.heightAnchor.constraint(equalToConstant: 800)
         ])
         stretchyHeaderHeightConstraints = self.contentView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: self.stretchyHeaderHeight)
         stretchyHeaderHeightConstraints?.isActive = true

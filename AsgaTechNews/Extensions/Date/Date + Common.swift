@@ -22,7 +22,6 @@ extension Date {
             case .gmt: return TimeZone(identifier: "GMT")
             case let .identifier(identifierString): return TimeZone(identifier: identifierString)
             case let .abbreviation(abbreviationString): return TimeZone(abbreviation: abbreviationString)
-//            case let .custom(gmt): return TimeZone(secondsFromGMT: gmt)
             }
         }
     }

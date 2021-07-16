@@ -49,6 +49,7 @@ enum Task {
     case multiPartRequest(parameters: [String: Any]?, multiPartData: [MultiPartData], encoding: ParameterEncoding)
 }
 
+// For Multi Part Requests..
 struct MultiPartData {
     var dataKey: String
     var dataValue: Data
