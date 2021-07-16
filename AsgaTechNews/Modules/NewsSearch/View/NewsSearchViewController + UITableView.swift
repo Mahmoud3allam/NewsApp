@@ -11,7 +11,7 @@ import UIKit
 extension NewsSearchViewController {
     func setupTableViewBehaviors() {
         self.tableView.separatorStyle = .none
-        self.tableView.showsVerticalScrollIndicator  = false
+        self.tableView.showsVerticalScrollIndicator = false
         self.tableView.register(ArticleCell.self, forCellReuseIdentifier: NSStringFromClass(ArticleCell.self))
     }
 
