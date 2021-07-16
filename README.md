@@ -31,7 +31,8 @@ it's a sample app with two scenes which you can search about news and checking i
 ```
 
  - Dark Mode Enabled
- - Pagination Enabled
+ 
+<img src="https://user-images.githubusercontent.com/42733811/126002214-40509c1a-5711-4a5c-83ca-65f6ef56a6ad.png" width="30%"></img> <img src="https://user-images.githubusercontent.com/42733811/126002263-352349b8-e73c-42cb-bb48-422aee9803cf.png" width="30%"></img> 
  
  ## Pods
  - Alamofire https://github.com/Alamofire/Alamofire
