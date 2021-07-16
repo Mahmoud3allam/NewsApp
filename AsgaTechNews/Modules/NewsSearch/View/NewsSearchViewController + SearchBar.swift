@@ -16,8 +16,4 @@ extension NewsSearchViewController: UISearchBarDelegate {
         }
         self.presenter.searchNews(with: unwrappedKeyword)
     }
-
-    func searchBarBookmarkButtonClicked(_: UISearchBar) {
-        // presenter.clearDataSourceOnCancel()
-    }
 }
