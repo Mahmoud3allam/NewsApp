@@ -11,9 +11,10 @@ import UIKit
 
 extension NewsSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let unwrappedKeyWord = searchBar.text {
-            self.presenter.searchNews(with: unwrappedKeyWord)
+        guard let unwrappedKeyword = searchBar.text, !unwrappedKeyword.isEmpty else {
+            return
         }
+        self.presenter.searchNews(with: unwrappedKeyword)
     }
 
     func searchBarBookmarkButtonClicked(_: UISearchBar) {

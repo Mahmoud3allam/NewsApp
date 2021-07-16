@@ -13,6 +13,7 @@ class NewsDetailsPresenter: NewsDetailsPresenterProtocol, NewsDetailsInteractorO
     private let interactor: NewsDetailsInteractorInPutProtocol
     private let router: NewsDetailsRouterProtocol
     var article: Article
+
     init(view: NewsDetailsViewProtocol, interactor: NewsDetailsInteractorInPutProtocol, router: NewsDetailsRouterProtocol, article: Article) {
         self.view = view
         self.interactor = interactor
@@ -23,5 +24,17 @@ class NewsDetailsPresenter: NewsDetailsPresenterProtocol, NewsDetailsInteractorO
     func viewDidLoad() {
         print("ViewDidLoad")
         self.view?.updateUserInterFace(with: article)
+    }
+
+    func getSourceUrl() -> URL? {
+        if let urlString = self.article.url {
+            if let desiredUrlForSafari = URL(string: urlString) {
+                return desiredUrlForSafari
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
     }
 }

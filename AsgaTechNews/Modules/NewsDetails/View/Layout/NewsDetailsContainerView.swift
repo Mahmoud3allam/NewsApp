@@ -31,7 +31,7 @@ class NewsDetailsContainerView: StretchyTableHeaderView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.backgroundColor = ColorType.background.value.withAlphaComponent(0.4)
-        if let font = UIFont(name: FontTypes.boldFont.name, size: 20) {
+        if let font = UIFont(name: FontTypes.boldFont.name, size: 22) {
             label.font = font
         }
         label.text = ""
@@ -79,6 +79,8 @@ class NewsDetailsContainerView: StretchyTableHeaderView {
         return button
     }()
 
+    var onTapExploreButton: ((_ exploreUrl: URL) -> Void)?
+
     init(presenter: NewsDetailsPresenterProtocol) {
         self.presenter = presenter
         super.init(frame: .zero)
@@ -93,6 +95,8 @@ class NewsDetailsContainerView: StretchyTableHeaderView {
         self.setupArticleSourceViewConstraints()
         self.setupArticleContentViewConstraints()
         self.setupExploreSourceButtonConstraints()
+        self.animateHeaderImage()
+        self.animateHeaderContent()
     }
 
     private func addSubViews() {
@@ -117,7 +121,8 @@ class NewsDetailsContainerView: StretchyTableHeaderView {
         NSLayoutConstraint.activate([
             self.articleTitleLabel.leadingAnchor.constraint(equalTo: self.headerContainerView.leadingAnchor, constant: 12),
             self.articleTitleLabel.trailingAnchor.constraint(equalTo: self.headerContainerView.trailingAnchor, constant: -12),
-            self.articleTitleLabel.bottomAnchor.constraint(equalTo: self.articleDateLabel.topAnchor, constant: -2)
+            self.articleTitleLabel.bottomAnchor.constraint(equalTo: self.articleDateLabel.topAnchor, constant: -2),
+            self.articleTitleLabel.heightAnchor.constraint(lessThanOrEqualTo: self.headerImageView.heightAnchor, multiplier: 0.5)
         ])
     }
 
@@ -156,8 +161,33 @@ class NewsDetailsContainerView: StretchyTableHeaderView {
         ])
     }
 
+    func animateHeaderImage() {
+        self.headerImageView.transform = CGAffineTransform(translationX: 0, y: -400)
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.9, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            self.headerImageView.transform = .identity
+        }, completion: nil)
+    }
+
+    func animateHeaderContent() {
+        UIView.animate(withDuration: 0.0, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.9, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            self.articleDateLabel.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.exploreSourceButton.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.articleTitleLabel.transform = CGAffineTransform(scaleX: 3, y: 3)
+
+        }) { _ in
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.9, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+                self.articleDateLabel.transform = .identity
+                self.exploreSourceButton.transform = .identity
+                self.articleTitleLabel.transform = .identity
+            }, completion: nil)
+        }
+    }
+
     @objc func didTappedExploreButton() {
         print("Explore Tapped")
+        if let url = self.presenter.getSourceUrl() {
+            self.onTapExploreButton?(url)
+        }
     }
 
     func setupView(with article: Article) {

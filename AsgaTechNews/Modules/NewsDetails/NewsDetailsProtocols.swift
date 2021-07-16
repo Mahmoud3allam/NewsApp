@@ -16,6 +16,7 @@ protocol NewsDetailsPresenterProtocol {
     var view: NewsDetailsViewProtocol? { get set }
 
     func viewDidLoad()
+    func getSourceUrl() -> URL?
 }
 
 protocol NewsDetailsRouterProtocol {}

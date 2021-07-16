@@ -6,7 +6,7 @@
 //  Copyright © 2021 AsgaTech. All rights reserved.
 //
 // @Mahmoud Allam Templete ^_^
-import Kingfisher
+import SafariServices
 import UIKit
 class NewsDetailsViewController: UIViewController, NewsDetailsViewProtocol {
     var presenter: NewsDetailsPresenterProtocol!
@@ -18,6 +18,7 @@ class NewsDetailsViewController: UIViewController, NewsDetailsViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+        self.bindContainerViewActions()
         // Do any additional setup after loading the view.
     }
 
@@ -34,5 +35,21 @@ class NewsDetailsViewController: UIViewController, NewsDetailsViewProtocol {
             self.title = article.author ?? ""
             self.containerView.setupView(with: article)
         }
+    }
+
+    private func bindContainerViewActions() {
+        self.containerView.onTapExploreButton = { [weak self] url in
+            guard let this = self else {
+                return
+            }
+            this.showSafariWith(url: url)
+        }
+    }
+
+    private func showSafariWith(url: URL) {
+        let config = SFSafariViewController.Configuration()
+        config.entersReaderIfAvailable = true
+        let vc = SFSafariViewController(url: url, configuration: config)
+        present(vc, animated: true)
     }
 }

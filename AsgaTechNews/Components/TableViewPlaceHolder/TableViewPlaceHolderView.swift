@@ -23,7 +23,7 @@ class TableViewPlaceHolderView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        if let font = UIFont(name: FontTypes.semiBold.name, size: 13) {
+        if let font = UIFont(name: FontTypes.semiBold.name, size: 16) {
             label.font = font
         }
         label.textAlignment = .center
@@ -35,20 +35,13 @@ class TableViewPlaceHolderView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        if let font = UIFont(name: FontTypes.regularFont.name, size: 10) {
+        if let font = UIFont(name: FontTypes.regularFont.name, size: 13) {
             label.font = font
         }
         label.textAlignment = .center
         label.textColor = ColorType.mainTextColor.value
         return label
     }()
-
-    init(placeHolderText: String) {
-        super.init(frame: .zero)
-        self.setupTitleLabel()
-        self.backgroundColor = .clear
-        self.title.text = placeHolderText
-    }
 
     init(placeHolderImage: UIImage = #imageLiteral(resourceName: "ic_no_posts"), title: String = "No Data yet", subTitle: String) {
         super.init(frame: .zero)
@@ -64,21 +57,11 @@ class TableViewPlaceHolderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupTitleLabel() {
-        self.addSubview(self.title)
-        NSLayoutConstraint.activate([
-            self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
-            self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -23),
-            self.title.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.title.topAnchor.constraint(equalTo: self.topAnchor)
-        ])
-    }
-
     private func layoutUserInterFaceForFullPlaceHolder() {
         self.addSubview(self.noDataImageView)
         NSLayoutConstraint.activate([
-            self.noDataImageView.heightAnchor.constraint(equalToConstant: 40),
-            self.noDataImageView.widthAnchor.constraint(equalToConstant: 34),
+            self.noDataImageView.heightAnchor.constraint(equalToConstant: 60),
+            self.noDataImageView.widthAnchor.constraint(equalToConstant: 54),
             self.noDataImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 70),
             self.noDataImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
@@ -87,7 +70,7 @@ class TableViewPlaceHolderView: UIView {
             self.title.topAnchor.constraint(equalTo: self.noDataImageView.bottomAnchor, constant: 18),
             self.title.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 32),
             self.title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -23),
-            self.title.heightAnchor.constraint(equalToConstant: 19)
+            self.title.heightAnchor.constraint(equalToConstant: 40)
         ])
         self.addSubview(self.subTitleLabel)
         NSLayoutConstraint.activate([

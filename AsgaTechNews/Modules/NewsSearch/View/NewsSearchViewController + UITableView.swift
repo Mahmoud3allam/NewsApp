@@ -30,8 +30,12 @@ extension NewsSearchViewController {
         self.presenter.didSelectTableView(at: indexPath)
     }
 
-    override func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.presenter.willDisplayCell(with: indexPath, keyWord: self.searchController.searchBar.text ?? "")
+        cell.alpha = 0
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            cell.alpha = 1
+        }, completion: nil)
     }
 
     override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
