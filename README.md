@@ -9,6 +9,27 @@ it's a sample app with two scenes which you can search about news and checking i
  ![Screen Shot 2021-07-16 at 9 49 08 PM](https://user-images.githubusercontent.com/42733811/126001685-90dc393b-128e-448a-9091-dc5eaf065672.png)
 
  - AutoLayout Programaticlly using Anchors
+
+```ruby
+
+    private func setupArticleSourceViewConstraints() {
+        NSLayoutConstraint.activate([
+            self.articleSourceView.topAnchor.constraint(equalTo: self.articleDescriptionLabel.bottomAnchor, constant: 10),
+            self.articleSourceView.leadingAnchor.constraint(equalTo: self.headerContainerView.leadingAnchor, constant: 12),
+            self.articleSourceView.trailingAnchor.constraint(equalTo: self.headerContainerView.trailingAnchor, constant: -12)
+        ])
+    }
+
+    private func setupArticleContentViewConstraints() {
+        NSLayoutConstraint.activate([
+            self.articleContentView.topAnchor.constraint(equalTo: self.articleSourceView.bottomAnchor, constant: 10),
+            self.articleContentView.leadingAnchor.constraint(equalTo: self.headerContainerView.leadingAnchor, constant: 12),
+            self.articleContentView.trailingAnchor.constraint(equalTo: self.headerContainerView.trailingAnchor, constant: -12),
+            self.articleContentView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -30)
+        ])
+    }
+```
+
  - Dark Mode Enabled
  - Pagination Enabled
  
