@@ -27,6 +27,8 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
         print("ViewDidLoad")
     }
 
+    // MARK: = TableView
+
     func numberOfArticles() -> Int {
         self.articles.count == 0 ?
             self.view?.showTableViewPlaceHolder(with: "Please search to refresh content.") :
@@ -54,7 +56,8 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
                 self.newsPage += 1
                 // Add Pagination Indicator
                 self.view?.addPaginationIndicator()
-                self.interactor.searchNews(with: keyWord, page: self.newsPage, isPaginating: true)
+                let keyWorkWithOutSpaces = keyWord.replacingOccurrences(of: " ", with: "")
+                self.interactor.searchNews(with: keyWorkWithOutSpaces, page: self.newsPage, isPaginating: true)
             }
         }
     }
@@ -68,10 +71,13 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
     }
 
     func searchNews(with keyWord: String) {
+        let keyWorkWithOutSpaces = keyWord.replacingOccurrences(of: " ", with: "")
         self.newsPage = 1
         self.view?.showActivityIndicator()
-        self.interactor.searchNews(with: keyWord, page: self.newsPage, isPaginating: false)
+        self.interactor.searchNews(with: keyWorkWithOutSpaces, page: self.newsPage, isPaginating: false)
     }
+
+    // MARK: = Interactor Call Backs
 
     func sucsessfullyFetchedNews(newsData: NewsEntity) {
         if let unwrappedArticles = newsData.articles, let totalItemsCount = newsData.totalResults {
@@ -79,10 +85,12 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
             self.articles = unwrappedArticles
             self.totalArticlesCount = totalItemsCount
         }
-        print(newsData)
-        self.view?.hideActivityIndicator()
         self.view?.dismissSearchController()
         self.view?.reloadTableView()
+        if articles.count > 0 {
+            view?.scrollToFirstIndex()
+        }
+        view?.hideActivityIndicator()
     }
 
     func sucsessfullyFetchedMoreNews(newsData: NewsEntity) {
@@ -95,8 +103,9 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
     }
 
     func failedToFetchNews(with message: String) {
+        self.view?.dismissSearchController()
         self.view?.hideActivityIndicator()
         self.view?.removePaginationIndicator()
-        print(message)
+        self.view?.showError(with: message)
     }
 }

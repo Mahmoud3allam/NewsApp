@@ -116,4 +116,8 @@ class NewsSearchViewController: UITableViewController, NewsSearchViewProtocol {
             self.tableView.tableFooterView = nil
         }
     }
+
+    func showError(with message: String) {
+        self.showDefaultAlert(title: "Error", message: message, actionTitle: "Ok!")
+    }
 }

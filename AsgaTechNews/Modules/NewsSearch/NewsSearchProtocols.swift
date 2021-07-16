@@ -19,6 +19,7 @@ protocol NewsSearchViewProtocol: AnyObject {
     func hideTableViewPlaceHolder()
     func addPaginationIndicator()
     func removePaginationIndicator()
+    func showError(with message: String)
 }
 
 protocol NewsSearchPresenterProtocol {
