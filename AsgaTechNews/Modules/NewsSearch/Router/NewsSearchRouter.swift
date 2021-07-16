@@ -20,4 +20,14 @@ class NewsSearchRouter: NewsSearchRouterProtocol {
         router.viewController = view
         return view
     }
+
+    func navigateToNewsDetailsScene(with article: Article) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            let newsDetailsScene = NewsDetailsRouter.createAnModule(article: article)
+            self.viewController?.navigationController?.pushViewController(newsDetailsScene, animated: true)
+        }
+    }
 }

@@ -41,7 +41,35 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
         cell.setData(article: self.articles[indexPath.item])
     }
 
+    func didSelectTableView(at IndexPath: IndexPath) {
+        guard self.articles.count - 1 >= IndexPath.item else {
+            return
+        }
+        self.router.navigateToNewsDetailsScene(with: self.articles[IndexPath.item])
+    }
+
+    func willDisplayCell(with Index: IndexPath, keyWord: String) {
+        if Index.item == self.articles.count - 1 {
+            if self.isLoadedArticlesFirstTime, canLoadMore() {
+                self.newsPage += 1
+                // Add Pagination Indicator
+                self.view?.addPaginationIndicator()
+                self.interactor.searchNews(with: keyWord, page: self.newsPage, isPaginating: true)
+            }
+        }
+    }
+
+    private func canLoadMore() -> Bool {
+        if self.totalArticlesCount > self.articles.count {
+            return true
+        }
+        self.view?.removePaginationIndicator()
+        return false
+    }
+
     func searchNews(with keyWord: String) {
+        self.newsPage = 1
+        self.view?.showActivityIndicator()
         self.interactor.searchNews(with: keyWord, page: self.newsPage, isPaginating: false)
     }
 
@@ -52,6 +80,7 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
             self.totalArticlesCount = totalItemsCount
         }
         print(newsData)
+        self.view?.hideActivityIndicator()
         self.view?.dismissSearchController()
         self.view?.reloadTableView()
     }
@@ -61,10 +90,13 @@ class NewsSearchPresenter: NewsSearchPresenterProtocol, NewsSearchInteractorOutP
             unwrappedArticles.forEach { self.articles.append($0) }
             self.totalArticlesCount = totalItemsCount
         }
+        self.view?.removePaginationIndicator()
         self.view?.reloadTableView()
     }
 
     func failedToFetchNews(with message: String) {
+        self.view?.hideActivityIndicator()
+        self.view?.removePaginationIndicator()
         print(message)
     }
 }

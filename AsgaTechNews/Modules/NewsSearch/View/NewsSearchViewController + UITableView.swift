@@ -26,6 +26,14 @@ extension NewsSearchViewController {
         return cell
     }
 
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.presenter.didSelectTableView(at: indexPath)
+    }
+
+    override func tableView(_: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.presenter.willDisplayCell(with: indexPath, keyWord: self.searchController.searchBar.text ?? "")
+    }
+
     override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }

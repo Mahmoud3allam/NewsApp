@@ -10,11 +10,15 @@ import Foundation
 protocol NewsSearchViewProtocol: AnyObject {
     var presenter: NewsSearchPresenterProtocol! { get set }
 
+    func showActivityIndicator()
+    func hideActivityIndicator()
     func reloadTableView()
     func scrollToFirstIndex()
     func dismissSearchController()
     func showTableViewPlaceHolder(with title: String)
     func hideTableViewPlaceHolder()
+    func addPaginationIndicator()
+    func removePaginationIndicator()
 }
 
 protocol NewsSearchPresenterProtocol {
@@ -24,9 +28,13 @@ protocol NewsSearchPresenterProtocol {
     func searchNews(with keyWord: String)
     func numberOfArticles() -> Int
     func configureTableView(with cell: ArticleCellView, indexPath: IndexPath)
+    func didSelectTableView(at IndexPath: IndexPath)
+    func willDisplayCell(with Index: IndexPath, keyWord: String)
 }
 
-protocol NewsSearchRouterProtocol {}
+protocol NewsSearchRouterProtocol {
+    func navigateToNewsDetailsScene(with article: Article)
+}
 
 protocol NewsSearchInteractorInPutProtocol {
     var presenter: NewsSearchInteractorOutPutProtocol? { get set }

@@ -9,6 +9,7 @@
 import Foundation
 protocol NewsDetailsViewProtocol: AnyObject {
     var presenter: NewsDetailsPresenterProtocol! { get set }
+    func updateUserInterFace(with article: Article)
 }
 
 protocol NewsDetailsPresenterProtocol {

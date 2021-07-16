@@ -9,5 +9,5 @@
 import Foundation
 enum NetworkConstant: String {
     case baseUrl = "https://newsapi.org/v2/"
-    case apiKey = "c17167712a124ec8a5d4da88318456ad"
+    case apiKey = "b03a652e418e409a859e8cdb88c76a83"
 }

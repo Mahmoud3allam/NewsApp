@@ -78,4 +78,42 @@ class NewsSearchViewController: UITableViewController, NewsSearchViewProtocol {
     func hideTableViewPlaceHolder() {
         self.tableView.backgroundView = nil
     }
+
+    func showActivityIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.view.showActivityIndicator(with: ._default, color: ColorType.mainTextColor.value)
+        }
+    }
+
+    func hideActivityIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.view.removeActivityIndicator()
+        }
+    }
+
+    func addPaginationIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            let paginationSpinner = NormalIndicator()
+            paginationSpinner.frame = CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: 40)
+            self.tableView.tableFooterView = paginationSpinner
+        }
+    }
+
+    func removePaginationIndicator() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.tableView.tableFooterView = nil
+        }
+    }
 }

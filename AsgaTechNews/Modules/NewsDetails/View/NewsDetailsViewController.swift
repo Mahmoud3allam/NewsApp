@@ -6,6 +6,7 @@
 //  Copyright © 2021 AsgaTech. All rights reserved.
 //
 // @Mahmoud Allam Templete ^_^
+import Kingfisher
 import UIKit
 class NewsDetailsViewController: UIViewController, NewsDetailsViewProtocol {
     var presenter: NewsDetailsPresenterProtocol!
@@ -23,5 +24,15 @@ class NewsDetailsViewController: UIViewController, NewsDetailsViewProtocol {
     override func loadView() {
         super.loadView()
         self.view = containerView
+    }
+
+    func updateUserInterFace(with article: Article) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.title = article.author ?? ""
+            self.containerView.setupView(with: article)
+        }
     }
 }

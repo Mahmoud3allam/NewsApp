@@ -23,7 +23,7 @@ class ArticleCell: UITableViewCell {
         image.backgroundColor = .clear
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.backgroundColor = .gray
+        image.backgroundColor = .lightGray
         return image
     }()
 
@@ -96,9 +96,8 @@ extension ArticleCell: ArticleCellView {
         self.descriptionLabel.text = article.title ?? ""
         if let imageUrlString = article.urlToImage {
             if let imageUrl = URL(string: imageUrlString) {
-                let placeHolderImage = UIImage(color: .lightGray)
                 self.articleImageView.kf.indicatorType = .activity
-                self.articleImageView.kf.setImage(with: imageUrl, placeholder: placeHolderImage)
+                self.articleImageView.kf.setImage(with: imageUrl)
             }
         }
     }

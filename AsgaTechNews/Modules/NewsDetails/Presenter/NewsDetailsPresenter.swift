@@ -12,14 +12,16 @@ class NewsDetailsPresenter: NewsDetailsPresenterProtocol, NewsDetailsInteractorO
     weak var view: NewsDetailsViewProtocol?
     private let interactor: NewsDetailsInteractorInPutProtocol
     private let router: NewsDetailsRouterProtocol
-
-    init(view: NewsDetailsViewProtocol, interactor: NewsDetailsInteractorInPutProtocol, router: NewsDetailsRouterProtocol) {
+    var article: Article
+    init(view: NewsDetailsViewProtocol, interactor: NewsDetailsInteractorInPutProtocol, router: NewsDetailsRouterProtocol, article: Article) {
         self.view = view
         self.interactor = interactor
         self.router = router
+        self.article = article
     }
 
     func viewDidLoad() {
         print("ViewDidLoad")
+        self.view?.updateUserInterFace(with: article)
     }
 }
